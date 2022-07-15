@@ -1,34 +1,33 @@
-const fs = require('fs');
-const { createRouter, notFoundHandler } = require('server');
-const { serveStatic } = require('./handlers/serveStatic.js');
-const { parseBodyParams } = require('./handlers/parseBodyParams.js');
+const express = require('express');
 const { logRequest } = require('./handlers/logRequest.js');
-const { receiveBodyParams } = require('./handlers/receiveBodyParams.js');
 const { loginHandler } = require('./handlers/loginHandler.js');
 const { injectCookies } = require('./handlers/injectCookies.js');
 const { injectSession } = require('./handlers/injectSession.js');
-const { parseSearchParams } = require('./handlers/parseSearchParams.js');
+const { gameHandler } = require('./handlers/gameHandler.js');
+const { Game } = require('./handlers/game.js');
 
-const createApp = ({ path }, sessions, logger) => {
+const createApp = ({ path }, sessions, logger, game) => {
   const users = [];
+  const app = express();
 
-  return createRouter(
-    receiveBodyParams,
-    parseBodyParams,
-    parseSearchParams,
-    logRequest(logger),
-    injectCookies,
-    injectSession(sessions),
-    loginHandler(users, sessions),
-    serveStatic(path),
-    notFoundHandler
-  );
+  app.use(express.urlencoded({ extended: true }));
+  app.use(logRequest(logger));
+  app.use(injectCookies);
+  app.use(injectSession(sessions));
+  app.use(loginHandler(users, sessions, game));
+  app.use(express.static(path));
+
+  app.use(express.text());
+  app.post('/move', gameHandler(users));
+
+  return app;
 };
 
 const config = {
   path: './public',
 }
 
-const app = createApp(config, {}, console.log)
+const game = new Game();
+const app = createApp(config, {}, console.log, game);
 
 module.exports = { app, createApp };

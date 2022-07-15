@@ -6,6 +6,8 @@
 
 ## DONE
 
+- [X] Draw a sequence diagram
+- [X] Persist the users
 - [X] Set up default handlers in server
 - [X] Create index page with having board 
 - [X] Create App js 

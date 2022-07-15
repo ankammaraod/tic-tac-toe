@@ -3,6 +3,7 @@ const parseCookies = (cookieString) => {
   if (!cookieString) {
     return cookies;
   }
+
   cookieString.split(';').forEach(element => {
     const [name, value] = element.split('=');
     cookies[name.trim()] = value.trim();

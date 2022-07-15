@@ -1,3 +1,5 @@
+const { Player } = require('./player.js');
+
 function createSession(username) {
   const date = new Date();
   const id = date.getTime();
@@ -20,14 +22,17 @@ const loginPage = `
     </body>
 </html>`;
 
-const loginHandler = (users, sessions) => {
-  return (req, res, next) => {
-    const { pathname } = req.url;
+const loginHandler = (users, sessions, game) => {
+  const symbols = ['X', 'O'];
+  const index = 0;
 
-    if (pathname !== '/') {
+  return (req, res, next) => {
+    const { url } = req;
+
+    if (url !== '/') {
       if (!req.session) {
         res.statusCode = 401;
-        res.end('Access Denied !!! Login to access the flower-catalog');
+        res.end('Access Denied !!! Login to access');
         return;
       }
       next();
@@ -40,16 +45,21 @@ const loginHandler = (users, sessions) => {
       return;
     }
 
-    const { bodyParams: { username } } = req;
+    const { username } = req.body;
+    if (users.length >= 2) {
+      res.statusCode = 429;
+      res.end('Max limit exceeded');
+      return;
+    }
 
-    users.push(users);
+    users.push(username);
+    game.addPlayer(new Player(index, username, symbols[index]));
+
     const session = createSession(username);
     sessions[session.id] = session;
 
-    res.setHeader('Set-Cookie', `id=${session.id}`);
-    res.setHeader('Location', '/index.html');
-    res.statusCode = 302;
-    res.end();
+    res.cookie('id', `${session.id}`);
+    res.redirect('/index.html');
   };
 };
 
