@@ -5,6 +5,7 @@ const { injectCookies } = require('./handlers/injectCookies.js');
 const { injectSession } = require('./handlers/injectSession.js');
 const { gameHandler } = require('./handlers/gameHandler.js');
 const { Game } = require('./handlers/game.js');
+const { getStats } = require('./handlers/getStats.js');
 
 const createApp = ({ path }, sessions, logger, game) => {
   const users = [];
@@ -19,6 +20,7 @@ const createApp = ({ path }, sessions, logger, game) => {
 
   app.use(express.text());
   app.post('/move', gameHandler(game));
+  app.get('/stats', getStats(game));
 
   return app;
 };
