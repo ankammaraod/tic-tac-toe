@@ -2,8 +2,48 @@
 
 <head>
   <title>Tic-Tac-Toe</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      background-color: black;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      row-gap: 30px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rows {
+      display: flex;
+    }
+
+    .cell {
+      width: 200px;
+      aspect-ratio: 1;
+      border: 0.5px solid grey;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+    }
+
+    #submit {
+      padding: 10px 20px;
+      font-size: 1.5em;
+    }
+
+    #display {
+      font-size: 2em;
+    }
+  </style>
   <script src="./scripts/start.js"></script>
-  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
