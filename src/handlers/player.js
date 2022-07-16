@@ -1,17 +1,13 @@
 class Player {
-  #id;
-  #name;
-  #symbol;
-  #positions;
   constructor(id, name, symbol) {
-    this.#id = id;
-    this.#name = name;
-    this.#symbol = symbol;
-    this.#positions = [];
+    this.id = id;
+    this.name = name;
+    this.symbol = symbol;
+    this.positions = [];
   }
 
   registerPos(position) {
-    this.#positions.push(position);
+    this.positions.push(position);
   }
 
   getInfo() {

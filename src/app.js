@@ -18,7 +18,7 @@ const createApp = ({ path }, sessions, logger, game) => {
   app.use(express.static(path));
 
   app.use(express.text());
-  app.post('/move', gameHandler(users));
+  app.post('/move', gameHandler(game));
 
   return app;
 };

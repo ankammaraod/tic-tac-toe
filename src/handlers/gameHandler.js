@@ -1,9 +1,12 @@
 const gameHandler = (game) => (req, res, next) => {
-  const data = req.body;
+  const position = req.body;
   const { username } = req.session;
 
-  console.log(data, username);
+  const status = game.register(position, username);
+  const gameStats = game.getInfo();
 
+  res.status(status);
+  res.send(gameStats);
 };
 
 

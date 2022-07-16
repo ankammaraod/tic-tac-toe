@@ -24,7 +24,7 @@ const loginPage = `
 
 const loginHandler = (users, sessions, game) => {
   const symbols = ['X', 'O'];
-  const index = 0;
+  let index = 0;
 
   return (req, res, next) => {
     const { url } = req;
@@ -53,7 +53,8 @@ const loginHandler = (users, sessions, game) => {
     }
 
     users.push(username);
-    game.addPlayer(new Player(index, username, symbols[index]));
+    const player = new Player(index, username, symbols[index++]);
+    game.addPlayer(player);
 
     const session = createSession(username);
     sessions[session.id] = session;
