@@ -17,8 +17,8 @@ const createApp = ({ path }, sessions, logger, game) => {
   app.use(injectSession(sessions));
   app.use(loginHandler(users, sessions, game));
   app.use(express.static(path));
-
   app.use(express.text());
+
   app.post('/move', gameHandler(game));
   app.get('/stats', getStats(game));
 

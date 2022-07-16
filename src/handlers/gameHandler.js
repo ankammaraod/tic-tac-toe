@@ -3,9 +3,8 @@ const gameHandler = (game, sessions) => (req, res, next) => {
   const { username } = req.session;
 
   const status = game.register(position, username);
-
   res.status(status);
-  res.end('');
+  res.end();
 };
 
 
